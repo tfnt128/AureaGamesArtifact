@@ -28,7 +28,7 @@ public class GridManager : MonoBehaviour
                 tileSpawned.name = $"Tile {i} {j}";
 
                 var isOffSet = (i % 2 == 0 && j % 2 != 0) || (i % 2 != 0 && j % 2 == 0);
-                tileSpawned.InitiateColors(isOffSet);
+                tileSpawned.GetColor(isOffSet);
 
                 _tiles[new Vector2(i, j)] = tileSpawned;
             }
