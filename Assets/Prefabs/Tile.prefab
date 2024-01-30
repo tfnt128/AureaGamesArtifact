@@ -99,8 +99,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed3d6a960e7a5b0428a84642cf22113d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _white: {r: 0.9019608, g: 0.9019608, b: 0.98039216, a: 1}
-  _black: {r: 0.28235295, g: 0.23921569, b: 0.54509807, a: 1}
+  _white: {r: 0.9921569, g: 0.9568628, b: 0.882353, a: 1}
+  _black: {r: 0.015686275, g: 0.4431373, b: 0.21568629, a: 1}
   _spRenderer: {fileID: 7776624204658129901}
   _highlight: {fileID: 7743895895727717031}
 --- !u!61 &1674727573334289945
