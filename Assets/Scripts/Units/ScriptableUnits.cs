@@ -3,15 +3,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Create New Unit", menuName = "Scriptable Unit")]
 public class ScriptableUnits : ScriptableObject
 {
-    public Character characterType;
-    public PieceType initialPiece;
+    public PieceType Piece;
     public GameObject charPrefab;
-}
-
-public enum Character
-{
-    Player = 0,
-    Obstacle = 1
 }
 
 public enum PieceType

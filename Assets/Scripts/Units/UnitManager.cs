@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,7 +11,7 @@ public class UnitData
 public class UnitManager : MonoBehaviour
 {
     public static UnitManager Instance;
-    [SerializeField] private UnitData playerData;
+    public UnitData PlayerData { get; private set; }
     [SerializeField] private List<UnitData> obstaclesData;
     
     private void Awake()
@@ -22,14 +21,14 @@ public class UnitManager : MonoBehaviour
 
     private void Start()
     {
-        SpawnObstacles();
+        PlayerData.scriptableUnit.Piece = PieceType.Queen;
     }
 
     public void SpawnPlayer()
     {
-        Vector2 playerPos = playerData.spawnPosition;
+        Vector2 playerPos = PlayerData.spawnPosition;
         var tile = GridManager.Instance.GetTileAtPosition(playerPos);
-        Instantiate(playerData.scriptableUnit.charPrefab, tile.transform.position, Quaternion.identity);
+        Instantiate(PlayerData.scriptableUnit.charPrefab, tile.transform.position, Quaternion.identity);
         
         GameManager.Instance.ChangeState(GameState.SpawnObstacles);
     }

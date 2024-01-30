@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Tile : MonoBehaviour
 {
@@ -6,6 +8,9 @@ public class Tile : MonoBehaviour
     [SerializeField] private SpriteRenderer _spRenderer;
     [SerializeField] private GameObject _highlight;
     private Color _thisTileColor;
+    
+    public UnityEvent<Vector2> OnTileClick = new UnityEvent<Vector2>();
+    private Vector2 tilePosition;
 
     private void Start()
     {
@@ -32,5 +37,10 @@ public class Tile : MonoBehaviour
         LeanTween.cancel(_highlight);
         
         _highlight.LeanAlpha(0f, 0.5f);
+    }
+
+    private void OnMouseDown()
+    {
+        OnTileClick.Invoke(tilePosition);
     }
 }
