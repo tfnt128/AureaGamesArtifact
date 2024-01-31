@@ -1,18 +1,13 @@
-using System.Collections;
 using System.Collections.Generic;
-using Unity.Mathematics;
 using UnityEngine;
 
 public class GridManager : MonoBehaviour
 {
-    public static GridManager Instance;
-    [SerializeField] private int _width, _height;
-    
-    
-    [SerializeField] private Tile _tilePrefab;
-    
+    public static GridManager Instance { get; private set; }
 
-    [SerializeField] private Transform _camRef;
+    [SerializeField] private int width, height;
+    [SerializeField] private Tile tilePrefab;
+    [SerializeField] private Transform camRef;
 
     private Dictionary<Vector2, Tile> _tiles;
 
@@ -20,28 +15,45 @@ public class GridManager : MonoBehaviour
     {
         Instance = this;
     }
-    
 
     public void GenerateGrid()
     {
+        InitializeGrid();
+        SpawnTiles();
+        PositionCamera();
+        GameManager.Instance.ChangeState(GameState.SpawnPlayer);
+    }
+
+    private void InitializeGrid()
+    {
         _tiles = new Dictionary<Vector2, Tile>();
-        for (int i = 0; i < _width; i++)
+    }
+
+    private void SpawnTiles()
+    {
+        for (int i = 0; i < width; i++)
         {
-            for (int j = 0; j < _height; j++)
+            for (int j = 0; j < height; j++)
             {
-                var tileSpawned = Instantiate(_tilePrefab, new Vector3(i, j), quaternion.identity);
-                tileSpawned.name = $"Tile {i} {j}";
-
-                var isOffSet = (i % 2 == 0 && j % 2 != 0) || (i % 2 != 0 && j % 2 == 0);
-                tileSpawned.GetColor(isOffSet);
-
-                _tiles[new Vector2(i, j)] = tileSpawned;
+                SpawnTile(i, j);
             }
         }
+    }
 
-        _camRef.position = new Vector3((float)_width / 2 - 0.5f, (float)_height / 2 - 0.5f, -10);
-        
-        GameManager.Instance.ChangeState(GameState.SpawnPlayer);
+    private void SpawnTile(int i, int j)
+    {
+        var tileSpawned = Instantiate(tilePrefab, new Vector3(i, j), Quaternion.identity);
+        tileSpawned.name = $"Tile {i} {j}";
+
+        var isOffset = (i % 2 == 0 && j % 2 != 0) || (i % 2 != 0 && j % 2 == 0);
+        tileSpawned.GetColor(isOffset);
+
+        _tiles[new Vector2(i, j)] = tileSpawned;
+    }
+
+    private void PositionCamera()
+    {
+        camRef.position = new Vector3((float)width / 2 - 0.5f, (float)height / 2 - 0.5f, -10);
     }
 
     public Tile GetTileAtPosition(Vector2 pos)

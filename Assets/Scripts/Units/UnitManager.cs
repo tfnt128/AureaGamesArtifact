@@ -6,14 +6,15 @@ public class UnitData
 {
     public ScriptableUnits scriptableUnit;
     public Vector2 spawnPosition;
+    public Tile associatedTile;
 }
 
 public class UnitManager : MonoBehaviour
 {
-    public static UnitManager Instance;
-    public UnitData PlayerData { get; private set; }
-    [SerializeField] private List<UnitData> obstaclesData;
-    
+    public static UnitManager Instance { get; private set; }
+    public UnitData playerData;
+    public List<UnitData> enemiesData;
+
     private void Awake()
     {
         Instance = this;
@@ -21,25 +22,57 @@ public class UnitManager : MonoBehaviour
 
     private void Start()
     {
-        PlayerData.scriptableUnit.Piece = PieceType.Queen;
+        InitializePlayerData();
+    }
+
+    private void InitializePlayerData()
+    {
+        playerData.scriptableUnit.Piece = PieceType.Queen;
     }
 
     public void SpawnPlayer()
     {
-        Vector2 playerPos = PlayerData.spawnPosition;
-        var tile = GridManager.Instance.GetTileAtPosition(playerPos);
-        Instantiate(PlayerData.scriptableUnit.charPrefab, tile.transform.position, Quaternion.identity);
-        
-        GameManager.Instance.ChangeState(GameState.SpawnObstacles);
+        Vector2 playerPos = playerData.spawnPosition;
+        Tile tile = GridManager.Instance.GetTileAtPosition(playerPos);
+
+        if (tile != null)
+        {
+            InstantiateUnit(playerData.scriptableUnit.charPrefab, tile.transform.position);
+            GameManager.Instance.ChangeState(GameState.SpawnEnemies);
+        }
+        else
+        {
+            Debug.LogWarning("Player spawn tile not found.");
+        }
     }
 
-    public void SpawnObstacles()
+    public void SpawnEnemies()
     {
-        foreach (UnitData obstacleData in obstaclesData)
+        foreach (UnitData enemyData in enemiesData)
         {
-            Vector2 obstaclePos = obstacleData.spawnPosition;
-            var tile = GridManager.Instance.GetTileAtPosition(obstaclePos);
-            Instantiate(obstacleData.scriptableUnit.charPrefab, tile.transform.position, Quaternion.identity);
+            SpawnEnemy(enemyData);
         }
+    }
+
+    private void SpawnEnemy(UnitData enemyData)
+    {
+        Vector2 enemyPos = enemyData.spawnPosition;
+        Tile tile = GridManager.Instance.GetTileAtPosition(enemyPos);
+
+        if (tile != null)
+        {
+            enemyData.associatedTile = tile;
+            GameObject enemy = InstantiateUnit(enemyData.scriptableUnit.charPrefab, tile.transform.position);
+            tile.SetEnemy(enemy, enemyData.scriptableUnit.Piece);
+        }
+        else
+        {
+            Debug.LogWarning("Enemy spawn tile not found.");
+        }
+    }
+
+    private GameObject InstantiateUnit(GameObject prefab, Vector3 position)
+    {
+        return Instantiate(prefab, position, Quaternion.identity);
     }
 }

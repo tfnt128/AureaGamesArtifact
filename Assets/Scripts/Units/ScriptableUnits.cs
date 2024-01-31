@@ -12,6 +12,8 @@ public enum PieceType
     Queen = 0,
     Pawn = 1,
     Bishop = 2,
-    Rook = 3
+    Rook = 3,
+    Knight = 4,
+    Empty = 5
     
 }

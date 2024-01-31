@@ -170,11 +170,20 @@ MonoBehaviour:
   playerData:
     scriptableUnit: {fileID: 11400000, guid: 5ece59d617f033a4cbbc64c40ff21bea, type: 2}
     spawnPosition: {x: 3, y: 0}
-  obstaclesData:
-  - scriptableUnit: {fileID: 11400000, guid: 0bd71dbc39e699d498c9565a2f6ddaf6, type: 2}
-    spawnPosition: {x: 0, y: 3}
+    associatedTile: {fileID: 0}
+  enemiesData:
   - scriptableUnit: {fileID: 11400000, guid: 91ff5ef6297c3e04a96faf0dd7e3f99e, type: 2}
     spawnPosition: {x: 3, y: 3}
+    associatedTile: {fileID: 0}
+  - scriptableUnit: {fileID: 11400000, guid: 0bd71dbc39e699d498c9565a2f6ddaf6, type: 2}
+    spawnPosition: {x: 0, y: 3}
+    associatedTile: {fileID: 0}
+  - scriptableUnit: {fileID: 11400000, guid: b0009220fa8e50748a9133903667b194, type: 2}
+    spawnPosition: {x: 5, y: 2}
+    associatedTile: {fileID: 0}
+  - scriptableUnit: {fileID: 11400000, guid: 6264210fddb83664d827355d4ffa1e63, type: 2}
+    spawnPosition: {x: 0, y: 1}
+    associatedTile: {fileID: 0}
 --- !u!1 &306787510
 GameObject:
   m_ObjectHideFlags: 0
@@ -425,7 +434,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1ae18caf865afe4d94146ab71b3fe56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameState: 0
 --- !u!4 &1180463951
 Transform:
   m_ObjectHideFlags: 0
@@ -520,10 +528,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 874e0db927833474498d4f466252383b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _width: 6
-  _height: 4
-  _tilePrefab: {fileID: 1741816321309130050, guid: e7211e126bd10f04c8f990f4fdfea752, type: 3}
-  _camRef: {fileID: 519420032}
+  width: 6
+  height: 4
+  tilePrefab: {fileID: 1741816321309130050, guid: e7211e126bd10f04c8f990f4fdfea752, type: 3}
+  camRef: {fileID: 519420032}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

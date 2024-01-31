@@ -5,7 +5,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
-    public GameState gameState;
+    public GameState CurrentGameState { get; private set; }
 
     private void Awake()
     {
@@ -17,10 +17,12 @@ public class GameManager : MonoBehaviour
         ChangeState(GameState.GenerateGrid);
     }
 
-    public void ChangeState(GameState newState)
+    public void ChangeState(GameState newState = GameState.None)
     {
-        gameState = newState;
-        switch (newState)
+        if (newState != GameState.None)
+            CurrentGameState = newState;
+
+        switch (CurrentGameState)
         {
             case GameState.GenerateGrid:
                 GridManager.Instance.GenerateGrid();
@@ -28,18 +30,19 @@ public class GameManager : MonoBehaviour
             case GameState.SpawnPlayer:
                 UnitManager.Instance.SpawnPlayer();
                 break;
-            case GameState.SpawnObstacles:
-                UnitManager.Instance.SpawnObstacles();
+            case GameState.SpawnEnemies:
+                UnitManager.Instance.SpawnEnemies();
                 break;
             default:
-                throw new ArgumentOutOfRangeException(nameof(newState));
+                throw new ArgumentOutOfRangeException(nameof(CurrentGameState));
         }
     }
 }
 
 public enum GameState
 {
+    None = -1,
     GenerateGrid = 0,
     SpawnPlayer = 1,
-    SpawnObstacles = 2
+    SpawnEnemies = 2
 }
